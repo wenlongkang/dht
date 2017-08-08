@@ -1,0 +1,11 @@
+Fetcher:
+ established: 0
+ sockets: 0
+
+ adaptive timeout:
+ mean:9975.0 median:9975.0 mode:9975.0 10tile:9975.0 90tile:9975.0
+  9950 | 
+  100% | 
+ 
+
+FetchTasks: 0 
