@@ -273,7 +273,7 @@ public class Mongo {
 
     @Test
     public void aaaaaaa(){
-        JSONObject jsonObject = JSON.parseObject("{\"kang\":\"wen\"}");
+        JSONObject jsonObject = JSON.parseObject("{\"kang\":\"wevvvvn\"}");
         Document document = new Document(jsonObject);
         MongoConnect.getConnect().insert("t_torrent","torrent",document);
     }

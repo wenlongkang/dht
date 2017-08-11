@@ -204,15 +204,21 @@ public class TorrentInfo {
 		
 		Consumer<String> printer = SerializedTaskExecutor.runSerialized((String s) -> {
 			// save db
-			System.out.println(s);
+			//System.out.println(s);
 
 			logger.info("GET!--> " + s);
 			try {
-				//JSONObject torrent = JSON.parseObject(s);
+				JSONObject torrent = JSON.parseObject(s);
+                String name = torrent.getString("name");
+                Document document = MongoConnect.getConnect().find("t_torrent", "torrent", "name", name);
+                if(document != null){
+                    return;
+                }else {
+                    document = new Document(torrent);
+                    MongoConnect.getConnect().insert("t_torrent","torrent",document);
+                }
+				//MongoConnect.getConnect().
 
-				//Document document = new Document(torrent);
-
-				//MongoConnect.getConnect().insert("t_torrent","torrent",document);
 			}catch (Exception e){
 				StackTraceElement[] stackTrace = e.getStackTrace();
 				if(stackTrace != null && stackTrace.length > 0){
@@ -244,7 +250,10 @@ public class TorrentInfo {
 				//logger.info("raw : " + raw);
 				//JSONObject json = JSON.parseObject(raw);
 				JSONObject json = new JSONObject();
-				json.put("locationn",p.toString());
+				String s = p.toString();
+				logger.info(s);
+
+				json.put("name",s.substring(s.lastIndexOf("\\") + 1,s.length()));
 				json.put("data",raw);
 				return json.toString();
 			}

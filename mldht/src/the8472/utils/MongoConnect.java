@@ -8,6 +8,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class MongoConnect {
 
     private MongoConnect(){
         if(client == null) {
-            //String uri = String.format("mongodb://%s:%s@%s/", "kangwenlong", "kangwenlonG0", "47.93.47.183");
+
 
             ServerAddress serverAddress = new ServerAddress("47.93.47.183",27017);
             List<ServerAddress> addrs = new ArrayList<ServerAddress>();
@@ -61,6 +62,10 @@ public class MongoConnect {
 
     public void insert(String dbName,String collection,Document document){
         client.getDatabase(dbName).getCollection(collection).insertOne(document);
+    }
+
+    public Document find(String dbName,String collection,String field,String value){
+      return client.getDatabase(dbName).getCollection(collection).find(Filters.lt(field,value)).first();
     }
 
     @Test
