@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import ch.qos.logback.core.joran.spi.JoranException;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import lbms.plugins.mldht.DHTConfiguration;
 import lbms.plugins.mldht.kad.DHT;
 import lbms.plugins.mldht.kad.DHT.LogLevel;
@@ -33,6 +34,7 @@ import lbms.plugins.mldht.kad.DHTLogger;
 import org.apache.logging.log4j.core.config.ConfigurationFactory;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
+import org.bson.Document;
 import the8472.mldht.indexing.LogBackConfigLoader;
 import the8472.utils.ConfigReader;
 import the8472.utils.FilesystemNotifications;
@@ -333,7 +335,19 @@ public class Launcher {
 	public static void main(String[] args) throws Exception {
 
 
+		loadDataToSolr();
+
 		new Launcher().start();
+	}
+
+	private static void loadDataToSolr() {
+
+		long total = MongoConnect.getConnect().getTotalSize("t_torrent","torrent");
+
+		long threadSize = total / 300;
+
+
+
 	}
 
 }
