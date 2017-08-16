@@ -212,8 +212,10 @@ public class TorrentInfo {
                 String name = torrent.getString("name");
                 Document document = MongoConnect.getConnect().find("t_torrent", "torrent", "name", name);
                 if(document != null){
+                	logger.info("find ! return");
                     return;
                 }else {
+                	logger.info("save " + name + "to mongo");
                     document = new Document(torrent);
                     MongoConnect.getConnect().insert("t_torrent","torrent",document);
                 }
@@ -253,7 +255,7 @@ public class TorrentInfo {
 				String s = p.toString();
 				logger.info(s);
 
-				json.put("name",s.substring(s.lastIndexOf("\\") + 1,s.length()));
+				json.put("name",s.substring(s.lastIndexOf("/") + 1,s.length()));
 				json.put("data",raw);
 				return json.toString();
 			}

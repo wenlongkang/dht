@@ -5,7 +5,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import com.mongodb.client.model.Filters;
@@ -65,7 +67,7 @@ public class MongoConnect {
     }
 
     public Document find(String dbName,String collection,String field,String value){
-      return client.getDatabase(dbName).getCollection(collection).find(Filters.lt(field,value)).first();
+      return client.getDatabase(dbName).getCollection(collection).find(Filters.eq(field,value)).first();
     }
 
     @Test
@@ -95,4 +97,33 @@ public class MongoConnect {
         insert("t_torrent","torrent",document);
     }
 
+    public List<Document> findAll(String t_torrent, String torrent,int pageNo,int size) {
+
+        ArrayList<Document> list = new ArrayList<>();
+
+        //FindIterable<Document> documents = client.getDatabase(t_torrent).getCollection(torrent).find();
+        MongoDatabase database = client.getDatabase(t_torrent);
+        MongoCollection<Document> collection = database.getCollection(torrent);
+        long count = collection.count();
+
+        FindIterable<Document> documents = collection.find();
+        FindIterable<Document> limit = documents.skip((pageNo -1) * size).limit(size);
+        MongoCursor<Document> iterator = limit.iterator();
+        while (iterator.hasNext()){
+            //Document next = iterator.next();
+            //System.out.print(next);
+            list.add(iterator.next());
+
+        }
+
+
+        return list;
+    }
+
+    public long getTotalSize(String t_torrent,String torrent) {
+        MongoCollection<Document> collection = client.getDatabase(t_torrent).getCollection(torrent);
+        long count = collection.count();
+
+        return count;
+    }
 }
