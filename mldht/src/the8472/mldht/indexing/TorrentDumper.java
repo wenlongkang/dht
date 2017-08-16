@@ -788,6 +788,7 @@ public class TorrentDumper implements Component {
 			}
 			logger.info("get torrent");
 			Files.createDirectories(torrentFile.getParent());
+
 			
 			try(FileChannel chan = FileChannel.open(torrentFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
 				ByteBuffer torrent = TorrentUtils.wrapBareInfoDictionary(infoDict);
