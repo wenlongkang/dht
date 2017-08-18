@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.nio.file.*;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -130,4 +131,32 @@ public class NetTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void  dddtestaaa(){
+        String name = "aaa.torrent";
+        String substring = name.substring(0, name.lastIndexOf("."));
+        System.out.println(substring);
+
+
+        LocalDateTime now = LocalDateTime.now();
+
+        System.out.println(now.toString());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

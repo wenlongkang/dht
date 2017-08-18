@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -215,6 +216,7 @@ public class TorrentInfo {
                 	logger.info("find ! return");
                     return;
                 }else {
+
                 	logger.info("save " + name + "to mongo");
                     document = new Document(torrent);
                     MongoConnect.getConnect().insert("t_torrent","torrent",document);
@@ -228,6 +230,8 @@ public class TorrentInfo {
 						logger.error(stackTrace[i].toString());
 					}
 				}
+				// 发生异常 , 退出
+				System.exit(-1);
 			}
 
 
@@ -257,6 +261,9 @@ public class TorrentInfo {
 
 				json.put("name",s.substring(s.lastIndexOf("/") + 1,s.length()));
 				json.put("data",raw);
+				LocalDateTime now = LocalDateTime.now();
+
+				//json.put("date",)
 				return json.toString();
 			}
 				

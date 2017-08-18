@@ -14,6 +14,8 @@ public class TorrentItem {
     public int size = 0;
     public String name = null;
     public String id = null;
+    public int totalFiles = 1;
+    public int totalSize = 0;
     public List<String> getNameList(){
 
         if(files == null){

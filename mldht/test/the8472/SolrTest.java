@@ -42,21 +42,28 @@ public class SolrTest {
 
         for (Document doc:all
              ) {
-
-            //System.out.print(doc);
-
-            String objectId = String.valueOf(doc.getObjectId("_id"));
-
             TorrentItem torrentItem = new TorrentItem();
-            torrentItem.id = objectId;
+
+            String torrentName = String.valueOf(doc.get("name"));//0xddffff.torrent
+            String substring = torrentName.substring(0, torrentName.lastIndexOf("."));
+            torrentItem.id = substring;
+
             JSONObject data = JSON.parseObject(String.valueOf(doc.get("data")));//info
+            int totalFiles = getTotalFiles(data);
+            torrentItem.totalFiles = totalFiles;
+
+            int totalSize = getTotalSize(data);
+            torrentItem.totalSize = totalSize;
+
+            // 添加创建日期
+            //TODO
             String info = data.getString("info");
             String s = info.replaceAll("\\n", "");
             String s1 = s.replaceAll("\\\\", "");
 
             data = JSONObject.parseObject(s1);// torrent data
 
-            String torrentName = String.valueOf(doc.get("name"));//0xddffff.torrent
+
 
             String name = null;
 
@@ -131,6 +138,28 @@ public class SolrTest {
 
 
 
+    }
+
+    private int getTotalSize(JSONObject data) {
+
+        return 0;
+    }
+
+    private int getTotalFiles(JSONObject data) {
+
+        String info = data.getString("info");
+        String s = info.replaceAll("\\n", "");
+        String s1 = s.replaceAll("\\\\", "");
+
+        JSONObject jsonObject = JSONObject.parseObject(s1);// torrent data
+
+        if(jsonObject.containsKey("files")){// 此字段可能没有
+           //
+            JSONArray files = jsonObject.getJSONArray("files");
+            return files.size();
+        }else{// 没有files字段
+            return 1;
+        }
     }
 
 
