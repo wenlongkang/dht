@@ -345,7 +345,7 @@ public class Launcher {
 		long total = MongoConnect.getConnect().getTotalSize("t_torrent","torrent");
 
 		long threadSize = total / 300;
-
+		// TODO
 
 
 	}
