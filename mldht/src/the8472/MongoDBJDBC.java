@@ -30,7 +30,7 @@ public class MongoDBJDBC {
 
 
         MongoClientURI uri = new MongoClientURI("mongodb://kangwenlong:kangwenlonG0@47.93.47.183/?authSource=t_torrent");
-        //int i = Security.addProvider(new BouncyCastleProvider());
+
 
         MongoClient mongoClient = new MongoClient(uri);
         //连接到数据库
