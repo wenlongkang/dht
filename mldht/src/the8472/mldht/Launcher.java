@@ -104,17 +104,8 @@ public class Launcher {
 	public Launcher() throws IOException {
 
 
-		//MongoConnect.getConnect();
 
-		//PropertyConfigurator.configure("log4j.properties");
-		//DOMConfigurator.configure("");
-
-		//InputStream resourceAsStream = this.getClass().getResourceAsStream("/log4j2.xml");
-
-		//ConfigurationSource source = new ConfigurationSource(resourceAsStream);
-		//Configurator.initialize(null, source);
 		try {
-			//Launcher.class.getResource();
 			LogBackConfigLoader.load(Launcher.class.getResource("/").getPath() + "logback.xml");
 		} catch (JoranException e) {
 			e.printStackTrace();
@@ -126,14 +117,6 @@ public class Launcher {
 		scheduler = new NonblockingScheduledExecutor("mlDHT", Math.max(Runtime.getRuntime().availableProcessors(), 4), (t, ex) ->  {
 			logger.log(ex, LogLevel.Fatal);
 		});
-
-/*		scheduler = new NonblockingScheduledExecutor("mlDHT", Math.max(Runtime.getRuntime().availableProcessors(), 4), new Thread.UncaughtExceptionHandler() {
-			@Override
-			public void uncaughtException(Thread t, Throwable e) {
-
-			}
-		});*/
-
 	}
 
 	private void onVmShutdown() {
@@ -335,12 +318,12 @@ public class Launcher {
 	public static void main(String[] args) throws Exception {
 
 
-		loadDataToSolr();
+		//loadDataToSolr();
 
 		new Launcher().start();
 	}
 
-	private static void loadDataToSolr() {
+	/*private static void loadDataToSolr() {
 
 		long total = MongoConnect.getConnect().getTotalSize("t_torrent","torrent");
 
@@ -348,6 +331,6 @@ public class Launcher {
 		// TODO
 
 
-	}
+	}*/
 
 }
